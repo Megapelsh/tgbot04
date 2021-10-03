@@ -1,0 +1,9 @@
+version: '2'
+services:
+  bot:
+    container_name: tgbot04
+    build: ./app
+    image: megapelsh/tgbot04:latest
+    restart: always
+    volumes: 
+      - ./app:/tbot
