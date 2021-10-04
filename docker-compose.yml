@@ -1,9 +1,32 @@
 version: '2'
 services:
   bot:
-    container_name: tgbot04
+    container_name: "tgbot04"
     build: ./app
     image: megapelsh/tgbot04:latest
     restart: always
     volumes: 
       - ./app:/tbot
+
+  mysql:
+    container_name: "tgbot04mysql"
+    image: mysql:8.0
+    volumes:
+      - data:/var/lib/mysql
+    env_file:
+      - ./db/db.env
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    container_name: "tgbot04pma"
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST=mysql
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
+
+volumes:
+  data:
