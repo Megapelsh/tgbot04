@@ -13,7 +13,7 @@ db_name = os.getenv('MYSQL_DATABASE')
 
 engine = create_engine(f"mysql+mysqlconnector://{db_user}:{db_password}@localhost/{db_name}", echo=True)
 if not engine:
-    exit("Error: no token provided")
+    exit("Error DB connect!")
 else:
     print('DB connected!')
 
@@ -21,7 +21,7 @@ Base = declarative_base()
 
 
 class Vehicle(Base):
-    __tablename__ = 'Vehicle'
+    __tablename__ = 'Vehicles'
 
     id = Column(Integer, primary_key=True)
     brand = Column(String(250), nullable=False)
@@ -31,11 +31,11 @@ class Vehicle(Base):
     year = Column(Integer, nullable=False)
     vin = Column(String(250), nullable=False)
     user_id = Column(Integer, ForeignKey("Users.id"))
-    token = Column(String(250), nullable=False)
-    User = relationship("Users")
+    token = Column(String(250))
+    User = relationship("User")
 
 
-class Users(Base):
+class User(Base):
     __tablename__ = 'Users'
 
     id = Column(Integer, primary_key=True)
